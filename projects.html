@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Lorenzo Rodriguez | Engineering Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Design Tokens ── */
+    :root {
+      --navy:      #0b1622;
+      --navy-mid:  #112032;
+      --navy-lt:   #16293f;
+      --accent:    #c9a84c;
+      --accent-lt: #e2c97e;
+      --cream:     #f4f1eb;
+      --muted:     #8a95a3;
+      --white:     #ffffff;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'Outfit', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--navy);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(11, 22, 34, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.18);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem; font-weight: 600;
+      color: var(--accent); letter-spacing: 0.04em; text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); text-decoration: none;
+      transition: color 0.25s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    /* ── Page Hero ── */
+    .page-hero {
+      padding: 9rem 6rem 5rem;
+      position: relative; overflow: hidden;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.035) 1px, transparent 1px);
+      background-size: 52px 52px;
+    }
+
+    /* large decorative word */
+    .deco-word {
+      position: absolute;
+      right: 4rem; top: 50%; transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: clamp(6rem, 14vw, 14rem);
+      font-weight: 300; font-style: italic;
+      color: rgba(201,168,76,0.045); line-height: 1;
+      pointer-events: none; user-select: none;
+    }
+
+    .breadcrumb {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.6rem;
+      position: relative;
+    }
+    .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { color: rgba(201,168,76,0.5); }
+
+    .page-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5vw, 5.5rem);
+      font-weight: 300; line-height: 1.06; color: var(--white);
+      max-width: 700px; margin-bottom: 1.25rem;
+      position: relative;
+    }
+    .page-hero h1 em { font-style: italic; color: var(--accent-lt); }
+
+    .hero-sub {
+      font-size: 0.95rem; line-height: 1.8;
+      color: rgba(244,241,235,0.62); max-width: 560px;
+      position: relative;
+    }
+
+    /* ── TOC Index Strip ── */
+    .toc-strip {
+      background: var(--navy-mid);
+      border-top: 1px solid rgba(201,168,76,0.12);
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      padding: 2rem 6rem;
+      display: flex; align-items: center; gap: 0;
+    }
+    .toc-strip-label {
+      font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--muted);
+      white-space: nowrap; margin-right: 3rem;
+    }
+    .toc-index {
+      display: flex; gap: 0; flex: 1;
+    }
+    .toc-index-item {
+      display: flex; align-items: center; gap: 1rem;
+      flex: 1; text-decoration: none;
+      padding: 0.5rem 1.5rem;
+      border-left: 1px solid rgba(201,168,76,0.1);
+      transition: background 0.2s;
+    }
+    .toc-index-item:first-child { border-left: none; }
+    .toc-index-item:hover { background: rgba(201,168,76,0.04); }
+    .toc-index-num {
+      font-family: var(--font-display);
+      font-size: 1.4rem; font-weight: 300;
+      color: rgba(201,168,76,0.4); line-height: 1;
+      flex-shrink: 0;
+    }
+    .toc-index-text {}
+    .toc-index-name {
+      font-size: 0.78rem; font-weight: 500;
+      color: var(--cream); line-height: 1.3;
+    }
+    .toc-index-type {
+      font-size: 0.68rem; color: var(--muted); margin-top: 0.15rem;
+    }
+    .toc-resume-link {
+      display: flex; align-items: center; gap: 1rem;
+      text-decoration: none; padding: 0.5rem 1.5rem;
+      border-left: 1px solid rgba(201,168,76,0.1);
+      transition: background 0.2s;
+    }
+    .toc-resume-link:hover { background: rgba(201,168,76,0.04); }
+    .toc-resume-num {
+      font-family: var(--font-display);
+      font-size: 1.4rem; font-weight: 300;
+      color: rgba(201,168,76,0.4); line-height: 1;
+    }
+    .toc-resume-name {
+      font-size: 0.78rem; font-weight: 500; color: var(--cream);
+    }
+    .toc-resume-type { font-size: 0.68rem; color: var(--muted); margin-top: 0.15rem; }
+
+    /* ── Project Cards Section ── */
+    .projects-section {
+      padding: 5rem 6rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 3rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .section-label::before {
+      content: ''; display: inline-block; width: 24px; height: 1px; background: var(--accent);
+    }
+
+    /* ── Project Card ── */
+    .project-card {
+      display: grid;
+      grid-template-columns: 140px 1fr auto;
+      gap: 0;
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      background: var(--navy-mid);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      text-decoration: none;
+      position: relative;
+    }
+    .project-card:last-child { margin-bottom: 0; }
+    .project-card:hover {
+      border-color: rgba(201,168,76,0.38);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+    }
+
+    /* Number column */
+    .card-num-col {
+      background: var(--navy-lt);
+      border-right: 1px solid rgba(201,168,76,0.1);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 2.5rem 1rem;
+      position: relative; overflow: hidden;
+    }
+    .card-num-col::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+    .card-num {
+      font-family: var(--font-display);
+      font-size: 3.5rem; font-weight: 300; line-height: 1;
+      color: rgba(201,168,76,0.35);
+    }
+    .card-num-label {
+      font-size: 0.58rem; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted);
+      margin-top: 0.4rem;
+    }
+
+    /* Content column */
+    .card-content {
+      padding: 2.25rem 2.5rem;
+      display: flex; flex-direction: column; justify-content: space-between;
+      gap: 1.25rem;
+    }
+
+    .card-top {}
+    .card-course {
+      font-size: 0.65rem; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem;
+    }
+    .card-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.2vw, 2.2rem);
+      font-weight: 300; color: var(--white); line-height: 1.15;
+      margin-bottom: 0.75rem;
+    }
+    .card-title em { font-style: italic; color: var(--accent-lt); }
+    .card-desc {
+      font-size: 0.875rem; line-height: 1.8;
+      color: rgba(244,241,235,0.65); max-width: 620px;
+    }
+
+    .card-bottom {
+      display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+    }
+    .card-meta-item {
+      display: flex; flex-direction: column; gap: 0.2rem;
+    }
+    .card-meta-label {
+      font-size: 0.6rem; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .card-meta-val {
+      font-size: 0.8rem; color: var(--cream); font-weight: 400;
+    }
+
+    /* Arrow column */
+    .card-arrow-col {
+      display: flex; align-items: center; justify-content: center;
+      padding: 2.5rem 2rem;
+      border-left: 1px solid rgba(201,168,76,0.08);
+    }
+    .card-arrow {
+      width: 40px; height: 40px;
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); font-size: 1rem;
+      transition: background 0.25s, border-color 0.25s, transform 0.25s;
+      flex-shrink: 0;
+    }
+    .project-card:hover .card-arrow {
+      background: rgba(201,168,76,0.12);
+      border-color: rgba(201,168,76,0.5);
+      transform: translateX(3px);
+    }
+
+    /* Tags */
+    .card-tags {
+      display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.75rem;
+    }
+    .card-tag {
+      background: var(--navy-lt);
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 2px;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.7rem; color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Resume Row ── */
+    .resume-row {
+      display: grid;
+      grid-template-columns: 140px 1fr auto;
+      gap: 0;
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 1.5rem;
+      background: var(--navy);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      text-decoration: none;
+    }
+    .resume-row:hover {
+      border-color: rgba(201,168,76,0.38);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+    }
+    .resume-num-col {
+      background: var(--navy-lt);
+      border-right: 1px solid rgba(201,168,76,0.1);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 2rem 1rem;
+      position: relative; overflow: hidden;
+    }
+    .resume-num-col::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+    .resume-num {
+      font-family: var(--font-display);
+      font-size: 3.5rem; font-weight: 300; line-height: 1;
+      color: rgba(201,168,76,0.35);
+    }
+    .resume-num-label {
+      font-size: 0.58rem; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted); margin-top: 0.4rem;
+    }
+    .resume-content {
+      padding: 2rem 2.5rem;
+      display: flex; flex-direction: column; justify-content: center; gap: 0.5rem;
+    }
+    .resume-eyebrow {
+      font-size: 0.65rem; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .resume-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2vw, 2rem);
+      font-weight: 300; color: var(--white); line-height: 1.2;
+    }
+    .resume-title em { font-style: italic; color: var(--accent-lt); }
+    .resume-desc {
+      font-size: 0.875rem; line-height: 1.75;
+      color: rgba(244,241,235,0.6); max-width: 540px;
+      margin-top: 0.25rem;
+    }
+    .resume-arrow-col {
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+      border-left: 1px solid rgba(201,168,76,0.08);
+    }
+    .resume-arrow {
+      width: 40px; height: 40px;
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); font-size: 1rem;
+      transition: background 0.25s, border-color 0.25s, transform 0.25s;
+    }
+    .resume-row:hover .resume-arrow {
+      background: rgba(201,168,76,0.12);
+      border-color: rgba(201,168,76,0.5);
+      transform: translateX(3px);
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--navy); padding: 2rem 6rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(201,168,76,0.08);
+      margin-top: 5rem;
+    }
+    footer p { font-size: 0.78rem; color: var(--muted); }
+    footer a { color: var(--accent); text-decoration: none; font-size: 0.78rem; }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .page-hero > * { animation: fadeUp 0.6s ease both; position: relative; }
+    .breadcrumb    { animation-delay: 0.05s; }
+    .page-hero h1  { animation-delay: 0.15s; }
+    .hero-sub      { animation-delay: 0.22s; }
+
+    .project-card, .resume-row {
+      animation: fadeUp 0.55s ease both;
+    }
+    .project-card:nth-child(1) { animation-delay: 0.05s; }
+    .project-card:nth-child(2) { animation-delay: 0.12s; }
+    .project-card:nth-child(3) { animation-delay: 0.19s; }
+    .resume-row                { animation-delay: 0.26s; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .page-hero { padding: 7rem 1.75rem 3.5rem; }
+      .deco-word { display: none; }
+      .toc-strip { padding: 1.5rem 1.75rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .toc-strip-label { margin-right: 0; }
+      .toc-index { flex-direction: column; gap: 0.5rem; }
+      .toc-index-item { border-left: none; border-top: 1px solid rgba(201,168,76,0.1); padding: 0.75rem 0; }
+      .toc-index-item:first-child { border-top: none; }
+      .toc-resume-link { border-left: none; border-top: 1px solid rgba(201,168,76,0.1); padding: 0.75rem 0; }
+      .projects-section { padding: 3.5rem 1.75rem; }
+      .project-card, .resume-row { grid-template-columns: 80px 1fr; }
+      .card-num { font-size: 2.2rem; }
+      .card-arrow-col, .resume-arrow-col { display: none; }
+      .card-content, .resume-content { padding: 1.5rem; }
+      footer { padding: 1.5rem 1.75rem; flex-direction: column; gap: 0.75rem; }
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html" class="nav-logo">LR</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="resume.html">Resume</a></li>
+    </ul>
+  </nav>
+
+  <!-- Page Hero -->
+  <header class="page-hero">
+    <div class="deco-word">Work</div>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      Projects
+    </div>
+    <h1>Engineering<br><em>Portfolio</em></h1>
+    <p class="hero-sub">
+      Three projects spanning autonomous systems, system dynamics &amp; controls, and manufacturing engineering — each one a different lens on what it means to solve a real engineering problem from first principles.
+    </p>
+  </header>
+
+  <!-- TOC Index Strip -->
+  <div class="toc-strip">
+    <span class="toc-strip-label">Contents</span>
+    <div class="toc-index">
+      <a href="project1.html" class="toc-index-item">
+        <span class="toc-index-num">01</span>
+        <div class="toc-index-text">
+          <div class="toc-index-name">Autonomous Wildfire Suppression UAV</div>
+          <div class="toc-index-type">GNC · Structures · CAD</div>
+        </div>
+      </a>
+      <a href="project2.html" class="toc-index-item">
+        <span class="toc-index-num">02</span>
+        <div class="toc-index-text">
+          <div class="toc-index-name">UAV Landing on a Moving Platform</div>
+          <div class="toc-index-type">GNC · MATLAB Simulation</div>
+        </div>
+      </a>
+      <a href="project3.html" class="toc-index-item">
+        <span class="toc-index-num">03</span>
+        <div class="toc-index-text">
+          <div class="toc-index-name">Funduino: DC Motor Modeling &amp; PID Control</div>
+          <div class="toc-index-type">Controls · Arduino · MATLAB</div>
+        </div>
+      </a>
+    </div>
+    <a href="resume.html" class="toc-resume-link">
+      <span class="toc-resume-num">CV</span>
+      <div>
+        <div class="toc-resume-name">Resume</div>
+        <div class="toc-resume-type">Experience &amp; Skills</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Project Cards -->
+  <div class="projects-section">
+    <p class="section-label">Design Projects</p>
+
+    <!-- Project 01 -->
+    <a href="project1.html" class="project-card">
+      <div class="card-num-col">
+        <div class="card-num">01</div>
+        <div class="card-num-label">Project</div>
+      </div>
+      <div class="card-content">
+        <div class="card-top">
+          <p class="card-course">AERSP 401 — Senior Capstone &nbsp;·&nbsp; Fall 2025</p>
+          <h2 class="card-title">Autonomous Wildfire<br>Suppression <em>UAV</em></h2>
+          <p class="card-desc">
+            A full systems-level design of a fully autonomous quadrotor UAV capable of detecting and suppressing wildfires without human input. The project encompassed guidance, navigation, and control (GNC) system design with a Kalman filter estimator, structural finite element analysis of the drone arms, SolidWorks CAD assembly, and test stand design — all within a strict $350 budget and 1 kg weight limit. The team was awarded 1st place in the class competition.
+          </p>
+          <div class="card-tags">
+            <span class="card-tag">GNC</span>
+            <span class="card-tag">Kalman Filter</span>
+            <span class="card-tag">FEA</span>
+            <span class="card-tag">SolidWorks</span>
+            <span class="card-tag">Autonomous Systems</span>
+            <span class="card-tag">Group Project</span>
+          </div>
+        </div>
+        <div class="card-bottom">
+          <div class="card-meta-item">
+            <span class="card-meta-label">Role</span>
+            <span class="card-meta-val">GNC Engineer &amp; Structures Lead</span>
+          </div>
+          <div class="card-meta-item">
+            <span class="card-meta-label">Outcome</span>
+            <span class="card-meta-val">🏆 1st Place — Class Competition</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-arrow-col">
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- Project 02 -->
+    <a href="project2.html" class="project-card">
+      <div class="card-num-col">
+        <div class="card-num">02</div>
+        <div class="card-num-label">Project</div>
+      </div>
+      <div class="card-content">
+        <div class="card-top">
+          <p class="card-course">AERSP 462 — Aerospace Autonomy &nbsp;·&nbsp; Fall 2025</p>
+          <h2 class="card-title">Autonomous UAV Landing<br>on a <em>Moving Platform</em></h2>
+          <p class="card-desc">
+            Designed and implemented a complete guidance, navigation, and control stack in MATLAB to autonomously land a simulated quadrotor UAV on a van moving in a circular path — with no human input during flight. The cascaded PID architecture featured an outer-loop position guidance system with velocity feedforward, an inner-loop attitude controller, and a control allocation mixer mapping commands to four individual motor throttle signals. Inspired by the MBZIRC 2017 robotics competition, the simulation was tuned to minimize terminal landing error over a 150-second run.
+          </p>
+          <div class="card-tags">
+            <span class="card-tag">GNC</span>
+            <span class="card-tag">PID Control</span>
+            <span class="card-tag">MATLAB</span>
+            <span class="card-tag">Quadrotor Dynamics</span>
+            <span class="card-tag">Individual Project</span>
+          </div>
+        </div>
+        <div class="card-bottom">
+          <div class="card-meta-item">
+            <span class="card-meta-label">Role</span>
+            <span class="card-meta-val">GNC Engineer (Solo)</span>
+          </div>
+          <div class="card-meta-item">
+            <span class="card-meta-label">Simulation</span>
+            <span class="card-meta-val">150 s · Final Score: 11.80</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-arrow-col">
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- Project 03 -->
+    <a href="project3.html" class="project-card">
+      <div class="card-num-col">
+        <div class="card-num">03</div>
+        <div class="card-num-label">Project</div>
+      </div>
+      <div class="card-content">
+        <div class="card-top">
+          <p class="card-course">AERSP 304 — System Dynamics &amp; Controls &nbsp;·&nbsp; Spring 2025</p>
+          <h2 class="card-title">Funduino: DC Motor<br><em>Modeling &amp; PID Control</em></h2>
+          <p class="card-desc">
+            A hardware-in-the-loop controls project bridging theory and physical implementation. Starting from the governing electromechanical equations, a first-order transfer function was derived analytically and then experimentally identified from step-response data collected across six input voltages via an Arduino Mega and rotary encoder. Three control architectures — open-loop, closed-loop, and PID — were designed in MATLAB simulation and implemented live on the hardware, with the PID controller achieving stable convergence to the target RPM within one second of run time.
+          </p>
+          <div class="card-tags">
+            <span class="card-tag">PID Control</span>
+            <span class="card-tag">Transfer Functions</span>
+            <span class="card-tag">Arduino</span>
+            <span class="card-tag">MATLAB</span>
+            <span class="card-tag">Hardware-in-the-Loop</span>
+            <span class="card-tag">Group Project</span>
+          </div>
+        </div>
+        <div class="card-bottom">
+          <div class="card-meta-item">
+            <span class="card-meta-label">Role</span>
+            <span class="card-meta-val">Controls Engineer</span>
+          </div>
+          <div class="card-meta-item">
+            <span class="card-meta-label">Result</span>
+            <span class="card-meta-val">PID convergence &lt; 1 second</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-arrow-col">
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- Resume Row -->
+    <a href="resume.html" class="resume-row">
+      <div class="resume-num-col">
+        <div class="resume-num">CV</div>
+        <div class="resume-num-label">Resume</div>
+      </div>
+      <div class="resume-content">
+        <p class="resume-eyebrow">Curriculum Vitae</p>
+        <h2 class="resume-title">Experience, Skills<br>&amp; <em>Education</em></h2>
+        <p class="resume-desc">
+          Pratt &amp; Whitney manufacturing engineering intern, Penn State aerospace research assistant, Formula SAE composite fabricator, and Namibia volunteer educator — one page that tells the full story.
+        </p>
+      </div>
+      <div class="resume-arrow-col">
+        <div class="resume-arrow">→</div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Lorenzo Rodriguez &nbsp;·&nbsp; Aerospace Engineering, Penn State University</p>
+    <a href="mailto:lorenzo.rodriguez04@icloud.com">lorenzo.rodriguez04@icloud.com</a>
+  </footer>
+
+</body>
+</html>
