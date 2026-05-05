@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume — Lorenzo Rodriguez | Aerospace Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Design Tokens ── */
+    :root {
+      --navy:      #0b1622;
+      --navy-mid:  #112032;
+      --navy-lt:   #16293f;
+      --accent:    #c9a84c;
+      --accent-lt: #e2c97e;
+      --cream:     #f4f1eb;
+      --muted:     #8a95a3;
+      --white:     #ffffff;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'Outfit', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--navy);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(11, 22, 34, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.18);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); text-decoration: none;
+      transition: color 0.25s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    /* ── Page Hero ── */
+    .page-hero {
+      padding: 9rem 6rem 5rem;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.035) 1px, transparent 1px);
+      background-size: 52px 52px;
+    }
+    .breadcrumb {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { color: rgba(201,168,76,0.5); }
+    .page-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4.5vw, 5rem);
+      font-weight: 300; line-height: 1.08; color: var(--white);
+      max-width: 780px; margin-bottom: 1.25rem;
+    }
+    .page-hero h1 em { font-style: italic; color: var(--accent-lt); }
+    .hero-sub {
+      font-size: 0.95rem; line-height: 1.7;
+      color: rgba(244,241,235,0.65); max-width: 580px; margin-top: 0.75rem;
+    }
+    .hero-contact {
+      display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 2rem;
+      align-items: center;
+    }
+    .contact-item {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.82rem; color: var(--muted);
+    }
+    .contact-item a {
+      color: var(--accent); text-decoration: none; transition: color 0.2s;
+    }
+    .contact-item a:hover { color: var(--accent-lt); }
+    .contact-dot {
+      width: 3px; height: 3px; border-radius: 50%;
+      background: rgba(201,168,76,0.35);
+    }
+
+    /* ── Resume Layout ── */
+    .resume-body {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 6rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    /* ── Section Base ── */
+    .res-section { margin-bottom: 3.5rem; }
+    .res-section:last-child { margin-bottom: 0; }
+
+    .res-section-label {
+      font-size: 0.68rem; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 1.75rem;
+      display: flex; align-items: center; gap: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .res-section-label::before {
+      content: ''; display: inline-block;
+      width: 20px; height: 1px; background: var(--accent);
+    }
+
+    /* ── Experience Entry ── */
+    .exp-entry { margin-bottom: 2rem; }
+    .exp-entry:last-child { margin-bottom: 0; }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.2rem;
+    }
+    .exp-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 400;
+      color: var(--white); line-height: 1.2;
+    }
+    .exp-date {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+      white-space: nowrap; flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+    .exp-org {
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--accent-lt);
+      margin-bottom: 0.85rem;
+    }
+    .exp-org span {
+      font-weight: 300; text-transform: none; letter-spacing: 0;
+      color: var(--muted); font-size: 0.8rem;
+    }
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .exp-bullets li {
+      display: flex; gap: 0.75rem; align-items: flex-start;
+      font-size: 0.855rem; line-height: 1.75;
+      color: rgba(244,241,235,0.72);
+    }
+    .exp-bullets li::before {
+      content: '–'; color: var(--accent); flex-shrink: 0; margin-top: 0.05rem;
+    }
+    .exp-bullets li strong { color: var(--cream); font-weight: 500; }
+
+    /* Divider between entries */
+    .exp-divider {
+      border: none; border-top: 1px solid rgba(255,255,255,0.05);
+      margin: 1.75rem 0;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar { position: sticky; top: 6rem; }
+
+    /* Education Card */
+    .edu-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 4px; padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      position: relative; overflow: hidden;
+    }
+    .edu-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: linear-gradient(90deg, var(--accent), transparent);
+    }
+    .edu-school {
+      font-family: var(--font-display);
+      font-size: 1.1rem; font-weight: 400; color: var(--white);
+      margin-bottom: 0.25rem; line-height: 1.3;
+    }
+    .edu-degree {
+      font-size: 0.82rem; color: var(--accent-lt);
+      font-weight: 400; margin-bottom: 0.2rem;
+    }
+    .edu-minor {
+      font-size: 0.78rem; color: var(--muted); margin-bottom: 1rem;
+    }
+    .edu-stats {
+      display: flex; flex-direction: column; gap: 0.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .edu-stat-row {
+      display: flex; justify-content: space-between;
+      font-size: 0.78rem;
+    }
+    .edu-stat-key { color: var(--muted); }
+    .edu-stat-val { color: var(--cream); font-weight: 400; }
+
+    /* Skills Card */
+    .skills-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 4px; padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      position: relative; overflow: hidden;
+    }
+    .skills-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: linear-gradient(90deg, var(--accent), transparent);
+    }
+    .skill-group { margin-bottom: 1.25rem; }
+    .skill-group:last-child { margin-bottom: 0; }
+    .skill-group-label {
+      font-size: 0.65rem; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem;
+    }
+    .skill-tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+    }
+    .skill-tag {
+      background: var(--navy-lt);
+      border: 1px solid rgba(201,168,76,0.14);
+      border-radius: 2px;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.75rem; color: rgba(244,241,235,0.8);
+      letter-spacing: 0.03em;
+    }
+
+    /* Languages Card */
+    .lang-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 4px; padding: 1.75rem;
+      position: relative; overflow: hidden;
+    }
+    .lang-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: linear-gradient(90deg, var(--accent), transparent);
+    }
+    .lang-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .lang-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .lang-name { font-size: 0.85rem; color: var(--cream); font-weight: 400; }
+    .lang-level {
+      font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+    }
+
+    /* Sidebar section label */
+    .sidebar-label {
+      font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .sidebar-label::before {
+      content: ''; display: inline-block; width: 16px; height: 1px; background: var(--accent);
+    }
+    .sidebar-block { margin-bottom: 2rem; }
+    .sidebar-block:last-child { margin-bottom: 0; }
+
+    /* ── Page Nav ── */
+    .page-nav {
+      padding: 3rem 6rem; background: var(--navy);
+      border-top: 1px solid rgba(201,168,76,0.1);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .page-nav a {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); text-decoration: none;
+      transition: color 0.25s;
+    }
+    .page-nav a:hover { color: var(--accent); }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--navy); padding: 2rem 6rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(201,168,76,0.08);
+    }
+    footer p { font-size: 0.78rem; color: var(--muted); }
+    footer a { color: var(--accent); text-decoration: none; font-size: 0.78rem; }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .page-hero > * { animation: fadeUp 0.6s ease both; }
+    .breadcrumb    { animation-delay: 0.05s; }
+    .page-hero h1  { animation-delay: 0.15s; }
+    .hero-sub      { animation-delay: 0.2s; }
+    .hero-contact  { animation-delay: 0.25s; }
+
+    /* ── Responsive ── */
+    @media (max-width: 1000px) {
+      .resume-body { grid-template-columns: 1fr; gap: 0; padding: 3.5rem 1.75rem; }
+      .sidebar { position: static; margin-top: 3rem; }
+      .page-hero { padding: 7rem 1.75rem 3.5rem; }
+      .page-nav { padding: 2rem 1.75rem; flex-direction: column; gap: 1rem; }
+      footer { padding: 1.5rem 1.75rem; flex-direction: column; gap: 0.75rem; }
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      .exp-header { flex-direction: column; gap: 0.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html" class="nav-logo">LR</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="resume.html" class="active">Resume</a></li>
+    </ul>
+  </nav>
+
+  <!-- Page Hero -->
+  <header class="page-hero">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      Resume
+    </div>
+    <h1>Lorenzo <em>Rodriguez</em></h1>
+    <p class="hero-sub">Aerospace Engineering student at Penn State University, pursuing a career in manufacturing operations and engineering leadership within the aerospace and defense industry.</p>
+    <div class="hero-contact">
+      <div class="contact-item">
+        <a href="mailto:lorenzo.rodriguez04@icloud.com">lorenzo.rodriguez04@icloud.com</a>
+      </div>
+      <div class="contact-dot"></div>
+      <div class="contact-item">
+        <a href="https://www.linkedin.com/in/ljrodriguez04" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="contact-dot"></div>
+      <div class="contact-item">State College, PA</div>
+    </div>
+  </header>
+
+  <!-- Resume Body -->
+  <div class="resume-body">
+
+    <!-- ── Main Column ── -->
+    <main>
+
+      <!-- Work Experience -->
+      <div class="res-section">
+        <p class="res-section-label">Work Experience</p>
+
+        <!-- Pratt & Whitney -->
+        <div class="exp-entry">
+          <div class="exp-header">
+            <div class="exp-title">Manufacturing Engineering Intern</div>
+            <div class="exp-date">May – Aug 2025</div>
+          </div>
+          <div class="exp-org">Pratt &amp; Whitney <span>· East Hartford, CT</span></div>
+          <ul class="exp-bullets">
+            <li>Developed <strong>CAD model and CAM program</strong> in Siemens NX to drill cooling holes on 45 HPT 1st Stage Blades using a Makino BX3 EDM drill, accelerating critical process development for the <strong>Geared Turbofan Advantage</strong> program.</li>
+            <li>Spearheaded the <strong>Right To Run validation</strong> for 5 machines at the Advanced Manufacturing Process Laboratory by collaborating with stakeholders, driving checklist completion, and establishing standardized documentation, ensuring on-time part development for the <strong>F135 Engine Core Upgrade</strong> and increasing machine capacity in shop floor spaces.</li>
+            <li>Streamlined the transfer of <strong>500+ projects</strong> into Smartsheet by developing a detailed Job Aid and prioritized timeline, enabling advanced project management capabilities for the Cold Section Module Center.</li>
+          </ul>
+        </div>
+
+        <hr class="exp-divider" />
+
+        <!-- AERTS Lab -->
+        <div class="exp-entry">
+          <div class="exp-header">
+            <div class="exp-title">Research Assistant</div>
+            <div class="exp-date">Jan – Dec 2025</div>
+          </div>
+          <div class="exp-org">Adverse Environment Rotor Test Stand Laboratory <span>· Penn State University</span></div>
+          <ul class="exp-bullets">
+            <li>Led testing and analysis of <strong>two low ice adhesion coatings</strong> for Collins Aerospace by conducting centrifuge icing chamber experiments, processing rime ice accumulation data across varying temperatures and humidity levels, ensuring optimal coating selection for enhanced aircraft performance.</li>
+            <li>Redesigned the centrifuge icing chamber by developing a <strong>CAD model for an improved centrifuge disk</strong> using SolidWorks, optimizing tip velocity within freezer constraints, expanding testing capabilities and enabling the production of a high-performance component.</li>
+          </ul>
+        </div>
+
+        <hr class="exp-divider" />
+
+        <!-- Physics LA -->
+        <div class="exp-entry">
+          <div class="exp-header">
+            <div class="exp-title">Physics Learning Assistant</div>
+            <div class="exp-date">Jan 2024 – Jan 2025</div>
+          </div>
+          <div class="exp-org">Penn State Eberly College of Science <span>· University Park, PA</span></div>
+          <ul class="exp-bullets">
+            <li>Facilitated student mastery of algebra and calculus-based mechanics by leading <strong>biweekly interactive learning sessions</strong> and providing individualized support during office hours, strengthening comprehension, homework performance, and exam readiness.</li>
+            <li>Designed and implemented innovative teaching strategies to break down complex physics concepts for diverse learners while efficiently balancing lecture attendance, office hours, and academic responsibilities.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Volunteering -->
+      <div class="res-section">
+        <p class="res-section-label">Volunteering</p>
+
+        <div class="exp-entry">
+          <div class="exp-header">
+            <div class="exp-title">High School Math Teacher</div>
+            <div class="exp-date">Jul – Aug 2024</div>
+          </div>
+          <div class="exp-org">Physically Active Youth Namibia <span>· Windhoek, Namibia</span></div>
+          <ul class="exp-bullets">
+            <li>Designed and delivered engaging math lectures for <strong>over 30 underprivileged students</strong> (grades 8–12) in Windhoek, Namibia, enhancing their academic skills while refining teaching, communication, and time management abilities.</li>
+            <li>Organized and led sports and team-building activities during a four-day savannah retreat, fostering camaraderie and deepening ability to connect with youth across diverse ages and backgrounds.</li>
+            <li>Developed a <strong>sustainable math curriculum and trained a full-time successor teacher</strong>, ensuring continued high-quality education for students after the volunteer tenure.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Extracurriculars -->
+      <div class="res-section">
+        <p class="res-section-label">Extracurricular Activities</p>
+
+        <div class="exp-entry">
+          <div class="exp-header">
+            <div class="exp-title">Manufacturer, Aerodynamics Subsystem</div>
+            <div class="exp-date">Sept 2023 – Dec 2024</div>
+          </div>
+          <div class="exp-org">Nittany Motorsports <span>· Penn State University</span></div>
+          <ul class="exp-bullets">
+            <li>Fabricated the front wing, rear wing, and undertray of a Formula SAE race car by performing <strong>composite layups</strong> for airfoils and endplates, delivering lightweight, high-performance aerodynamic components for competition.</li>
+            <li>Gained hands-on composite manufacturing and teamwork skills as an active member of the Aerodynamics subsystem, contributing to the design and assembly of a functional Formula-style vehicle.</li>
+            <li>Supported stadium clean-up initiatives that collectively raised <strong>$5,000+ for club funding</strong>, ensuring resource availability for future car development and competition costs.</li>
+          </ul>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+
+      <!-- Education -->
+      <div class="sidebar-block">
+        <p class="sidebar-label">Education</p>
+        <div class="edu-card">
+          <div class="edu-school">The Pennsylvania State University</div>
+          <div class="edu-degree">B.S. Aerospace Engineering</div>
+          <div class="edu-minor">Minor: Engineering Design</div>
+          <div class="edu-stats">
+            <div class="edu-stat-row">
+              <span class="edu-stat-key">Expected</span>
+              <span class="edu-stat-val">May 2026</span>
+            </div>
+            <div class="edu-stat-row">
+              <span class="edu-stat-key">GPA</span>
+              <span class="edu-stat-val">3.79</span>
+            </div>
+            <div class="edu-stat-row">
+              <span class="edu-stat-key">Dean's List</span>
+              <span class="edu-stat-val">6 of 7 Semesters</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technical Skills -->
+      <div class="sidebar-block">
+        <p class="sidebar-label">Technical Skills</p>
+        <div class="skills-card">
+          <div class="skill-group">
+            <p class="skill-group-label">Programming</p>
+            <div class="skill-tags">
+              <span class="skill-tag">MATLAB</span>
+              <span class="skill-tag">C++</span>
+              <span class="skill-tag">Arduino</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <p class="skill-group-label">CAD / CAM</p>
+            <div class="skill-tags">
+              <span class="skill-tag">SolidWorks</span>
+              <span class="skill-tag">Siemens NX</span>
+              <span class="skill-tag">CAM (NX)</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <p class="skill-group-label">Manufacturing</p>
+            <div class="skill-tags">
+              <span class="skill-tag">EDM</span>
+              <span class="skill-tag">Composite Layup</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <p class="skill-group-label">Analysis &amp; Tools</p>
+            <div class="skill-tags">
+              <span class="skill-tag">XFOIL</span>
+              <span class="skill-tag">Smartsheet</span>
+              <span class="skill-tag">Microsoft Office</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Languages -->
+      <div class="sidebar-block">
+        <p class="sidebar-label">Languages</p>
+        <div class="lang-card">
+          <div class="lang-row">
+            <span class="lang-name">English</span>
+            <span class="lang-level">Fluent</span>
+          </div>
+          <div class="lang-row">
+            <span class="lang-name">Spanish</span>
+            <span class="lang-level">Fluent</span>
+          </div>
+          <div class="lang-row">
+            <span class="lang-name">Portuguese</span>
+            <span class="lang-level">Basic</span>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+
+  <!-- Page Navigation -->
+  <div class="page-nav">
+    <a href="project3.html">← Project 03</a>
+    <a href="projects.html">All Projects →</a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Lorenzo Rodriguez &nbsp;·&nbsp; Aerospace Engineering, Penn State University</p>
+    <a href="mailto:lorenzo.rodriguez04@icloud.com">lorenzo.rodriguez04@icloud.com</a>
+  </footer>
+
+</body>
+</html>
